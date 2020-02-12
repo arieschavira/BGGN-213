@@ -1,0 +1,123 @@
+---
+title: "Unsupervised learning"
+author: "Aries Chavira"
+date: "2/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Set up
+
+## Get our input data
+
+Our data for today come from the Wisconsin Breast Cancer Diagnostic Data Set
+
+```{r}
+wisc.df <- read.csv("WisconsinCancer.csv")
+head(wisc.df)
+```
+
+```{r}
+wisc.data <- as.matrix(wisc.df[,3:32])
+head(wisc.data)
+```
+
+> Q. How many patients are there in this dataset?
+
+```{r}
+nrow(wisc.df)
+```
+
+> Q. How many cancer and non-cancer patients are there?
+
+```{r}
+table(wisc.df$diagnosis)
+```
+
+```{r}
+sum(wisc.df$diagnosis == "M")
+```
+
+> Q. How many cols are "_mean" values?
+
+```{r}
+colnames(wisc.df)
+```
+
+We can use the `grep()` function to see this
+
+```{r}
+grep("_mean", colnames(wisc.df), value=TRUE )
+```
+
+We can take the `length()` of this to find how many matches there are
+```{r}
+length( grep("_mean", colnames(wisc.df)) )
+```
+
+
+## Enter Principal Component Analysis
+
+First we need to check whether our input data should be scaled. Lets check the sd() and mean() of all our columns in `wisc.data`
+
+```{r}
+wisc.pr <- prcomp( wisc.data, scale=TRUE )
+summary(wisc.pr)
+```
+
+```{r}
+attributes(wisc.pr)
+```
+
+We want the `X` component to make our PCA plot 
+
+```{r}
+plot(wisc.pr$x[,1], wisc.pr$x[,2], col=wisc.df$diagnosis)
+```
+```{r}
+data.scaled <- scale(wisc.data)
+
+data.dist <- dist(data.scaled)
+
+hc <- hclust( dist(wisc.data) ) 
+plot(hc)
+
+```
+There doesnt seeem to be a good place to cut the tree, so... ; 
+
+## Cluster in PC space 
+
+Use the results of PCA to do my clustering 
+```{r}
+wisc.pr.hc <- hclust( dist(wisc.pr$x[,1:3]), method="ward.D2" )
+plot(wisc.pr.hc)
+```
+```{r}
+grps <- cutree(wisc.pr.hc, k=2)
+table(grps)
+table(grps, wisc.df$diagnosis)
+```
+```{r}
+url <- "https://tinyurl.com/new-samples-CSV"
+new <- read.csv(url)
+npc <- predict(wisc.pr, newdata=new)
+npc
+
+plot(wisc.pr$x[,1], wisc.pr$x[,2], col=wisc.df$diagnosis)
+points(npc[,1], npc[,2], col="coral", pch=16, cex=3)
+text(npc[,1], npc[,2], labels=c(1,2) , col="white")
+```
+
+
+
+
+
+
+
+
+
+
+
