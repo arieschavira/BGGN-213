@@ -1,0 +1,139 @@
+---
+title: 'Class 6: Writing your own R functions'
+author: "Aries Chavira"
+date: "1/24/2020"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lesson 1 
+
+1. lets insert a code chunk with the shortcut `option-CMD-i`:
+
+2. read.table(file, header = TRUE, sep = "\t") == read.delim 
+    This is beacuse **read.table()** is the parent funciton of 
+    - read.csv
+    - read.csv2
+    - read.delim
+    
+## Saving Files 
+Table one 
+
+```{r}
+x <- read.table("test1.txt", sep = ",", header = TRUE)
+x
+```
+
+Table two
+```{r}
+x <- read.table("test2.txt", sep = "$", header = TRUE)
+x
+```
+
+Table three
+```{r}
+x <- read.table("test3.txt")
+x
+```
+
+## Lesson two 
+
+#Creating Functions 
+
+This is an example of a function named `add` with input `x` and `y`.
+```{r}
+add <- function(x, y=1) {
+  # Sum the inputs x, and y
+  x + y
+}
+```
+
+Try using it! 
+
+Example 1: 
+```{r}
+add(x=c(1,6,2), y=4)
+```
+
+Example 2:
+```{r}
+x <- c(10,4,22,6)
+min(x)
+max(x)
+range(x)
+```
+
+Example 3: 
+```{r}
+rescale <- function(x) {
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng)
+}
+```
+
+```{r}
+x <- c(10,4,5,3,12,NA)
+rescale(x) 
+```
+
+Rescale 3
+```{r}
+rescale3 <- function(x, na.rm=TRUE, plot=FALSE) {
+
+    rng <-range(x, na.rm=na.rm)
+    print("Hello")
+ 
+    answer <- (x - rng[1]) / (rng[2] - rng[1])
+    
+    if(plot) {
+      plot(answer, typ="b", lwd=4)
+    }
+  print("is it me you are looking for?")
+  print("I can see it in ...")
+}
+
+rescale3(x)
+```
+
+## Working with bio3d package
+
+To use funcitons for any package type `library()` to load it. 
+```{r}
+library("bio3d")
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+what is read.pdb?
+```{r}
+s1 <- read.pdb("4AKE") # kinase with drug
+s1
+```
+
+```{r}
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+points(s2.b, col="blue", type="l")
+points(s3.b, col="red", type="l", lwd=3)
+```
+
+
+

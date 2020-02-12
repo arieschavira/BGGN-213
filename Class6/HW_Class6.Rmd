@@ -1,0 +1,72 @@
+---
+title: "Class6 HW - Script"
+author: "Aries Chavira"
+date: "1/27/2020"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Generate standard scatter plots of specific selection of atoms from a Protein Data Bank object 
+
+## Installing Bio3D 
+
+Here we will utilize specific functions from the Bio3D v2.3 package. To being we need to install the Bio3D package so that it can be used for subsequent analyses. To do this run the following code in the R Console: 
+
+**install.packages('bio3d')**
+
+Next we will load the Bio3D library. 
+To be able to access the Bio3D functions, run the following code into the R studio interface.
+
+```{r}
+library(bio3d)
+```
+
+## Code to generate a scatter plot for a specific selection of atoms from a PDB object 
+
+Below is the code behind the `easypdb.plot` function, and how it works. 
+
+It was generated to be able to take any four letter PDB identifier, and generate a subsequent scatter plot. 
+
+**See next section for an example**
+
+```{r}
+easypdb.plot <- function(x) {   # x = the four letter PDB identifier
+  
+  y <- read.pdb(x)    
+  
+
+  A.chainA <- trim.pdb(y, chain="A", elety="CA")
+
+  Z <- A.chainA$atom$b
+   
+  plotb3(Z, sse=A.chainA, typ="l", ylab="B Factor", col = "coral", lwd=2, main = x)
+  
+}
+```
+
+- `read.pdb` reads a PDB coordiate file using the four letter PDB identifier
+- `Trim.pdb(y, chain="A", elety="CA")` taked the protein identified, and produces a smaller new object that only conatins the Alpha chain, and the CA nucleic atoms. 
+- Finally, `plotb3` generates a per-residue line plot of your trimmed PDB object. 
+- The color, y label (`ylab`), Color(`col`), and line width(`lwd`) can all be adjusted. 
+- The plot is automatically labeled with the four letter PDB identifier. **To remove this feature, simply delete the `main = x` argument in the last line. 
+
+Run the code to generate the `easypdb.plot` function. 
+
+Next, insert your four letter PDB identifier into the function to generate your plot 
+## Example 
+
+```{r}
+easypdb.plot("4AKE")
+```
+
+
+
+
+
+
