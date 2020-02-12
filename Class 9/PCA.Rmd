@@ -1,0 +1,136 @@
+---
+title: "Class 9: Machine learning pt1"
+author: "Aries Chavira"
+date: "2/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## K-means cluster 
+```{r}
+tmp <- c(rnorm(30,-3), rnorm(30,3))
+x <- cbind(x=tmp, y=rev(tmp))
+
+plot(x)
+```
+
+```{r}
+km <- kmeans(x, centers= 2, nstart= 20)
+
+print(km)
+
+```
+What is in the output object `km` I can use the `attributes()` function 
+```{r}
+attributes(km)
+```
+Q. How many points are in the each cluster?
+```{r}
+km$size
+```
+
+Q. What 'component' of your result object details cluster assignment and cluster centers as blue points 
+
+```{r}
+km$cluster
+```
+Q. You can check many 2s and 1s are in this vector with the `table()` function 
+
+```{r}
+table(km$cluster)
+```
+```{r}
+plot(x, col=km$cluster)
+points(km$centers, col="blue", pch=8, cex=4)
+```
+
+## Hierarchical Clustering with `hclust()`
+There are two different types of clustering: `hclust`
+-Bottom up 
+-Top down
+
+You need to tell is the distance to which it will consider two things in a cluster, often determined by Euclidean distance. Below is an example of using `dist()` to create the distance matix; 
+
+```{r}
+hc <- hclust(dist(x))
+
+plot(hc)
+
+abline(h=6, col="red")
+
+```
+
+```{r}
+# Cut by height h
+# Calling k tells cutree() to cut the tree to generate k number of clusters 
+table( cutree(hc, k=5))
+```
+
+
+Q. Use the dist(), hclust(), plot() and cutree()
+ functions to return 2 and 3 clusters
+Q. How does this compare to your known 'col' groups?
+
+```{r}
+x <- rbind(
+ matrix(rnorm(100, mean=0, sd=0.3), ncol = 2), # c1
+ matrix(rnorm(100, mean=1, sd=0.3), ncol = 2), # c2
+ matrix(c(rnorm(50, mean=1, sd=0.3), # c3
+ rnorm(50, mean=0, sd=0.3)), ncol = 2))
+colnames(x) <- c("x", "y")
+
+plot(x)
+col <- as.factor( rep(c("c1","c2","c3"), each=50) )
+plot(x, col=col)
+plot(hc)
+
+plot(hc)
+```
+## Using European data to generate PCA's 
+
+The main function in base R for PCA is called `prcomp()`. Here we will use PCA's to examine the funny food that folks eat in the UK and N.Ireland. 
+
+```{r}
+x <- read.csv("./UK_foods.csv", row.names = 1)
+# dim() function returns the number of rows and columns or the nrow() and ncol() functions to return each separately,
+dim(x)
+```
+
+Make some conventional plots
+```{r}
+#PCA to the rescue! 
+pca <- prcomp( t(x) )
+
+summary(pca)
+```
+
+```{r}
+attributes(pca)
+```
+```{r}
+plot(pca$x[,1], pca$x[,2])
+text(pca$x[,1], pca$x[,2], labels = colnames(x),
+  col=c("black","red","blue","coral"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
