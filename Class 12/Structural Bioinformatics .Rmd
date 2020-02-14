@@ -7,24 +7,129 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## GitHub Documents
+## PDB Statistics
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+> Q. What percentage of structures in the PDB are solved by X-Ray and Electron Microscopy.
 
-## Including Code
-
-You can include R code in the document as follows:
-
-```{r cars}
-summary(cars)
+```{r}
+stats <- read.csv("./Data Export Summary.csv", row.names=1)
+stats
 ```
 
-## Including Plots
+> Q: What proportion of structures in the PDB are protein?
 
-You can also embed plots, for example:
+```{r}
+# Method 1 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+Proteins <- sum(stats$Proteins)
+all <- sum(stats$Total)
+percent <- Proteins/all * 100
+percent
+
+# Method 2 
+
+ans <- round(stats$Total / sum(stats$Total) * 100, 2)
+names(ans) <- rownames(stats)
+ans
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+> Q: Type HIV in the PDB website search box on the home page and determine how many HIV-1 protease structures are in the current PDB?
+
+## Use Bio3D package to read PDB 
+
+```{r}
+library("bio3d")
+library(ggplot2)
+
+pdb <- read.pdb("1hsg")
+pdb
+```
+```{r}
+library(ggplot2)
+library(ggrepel)
+library(devtools)
+library(BiocManager)
+library(bio3d)
+```
+
+```{r}
+library(bio3d)
+aa <- get.seq("1ake_A")
+
+aa
+```
+
+
+```{r}
+library(msa)
+```
+
+
+```{r}
+hits <- NULL
+hits$pdb.id <- c('1AKE_A','4X8M_A','6S36_A','6RZE_A','4X8H_A','3HPR_A','1E4V_A','5EJE_A','1E4Y_A','3X2S_A','6HAP_A','6HAM_A','4K46_A','4NP6_A','3GMT_A','4PZL_A')
+```
+
+```{r}
+files <- get.pdb(hits$pdb.id, path="pdbs", split=TRUE, gzip=TRUE)
+
+```
+
+```{r}
+# Align releated PDBs
+pdbs <- pdbaln(files, fit = TRUE, exefile="msa")
+
+# Vector containing PDB codes for figure axis
+ids <- basename.pdb(pdbs$id)
+
+# Draw schematic alignment
+plot(pdbs, labels=ids)
+```
+## Viewing our superposed structures
+
+```{r}
+library(bio3d.view)
+
+# Perform PCA
+pc.xray <- pca(pdbs)
+plot(pc.xray)
+```
+```{r}
+# Calculate RMSD
+rd <- rmsd(pdbs)
+
+# Structure-based clustering
+hc.rd <- hclust(dist(rd))
+grps.rd <- cutree(hc.rd, k=3)
+
+plot(pc.xray, 1:2, col="grey50", bg=grps.rd, pch=21, cex=1)
+
+pc1 <- mktrj(pc.xray, pc=1, file="pc_1.pdb")
+```
+
+```{r}
+#Plotting results with ggplot2
+library(ggplot2)
+library(ggrepel)
+
+df <- data.frame(x=pc.xray$z[,1], y=pc.xray$z[,2])
+col <- as.factor(grps.rd)
+
+p <- ggplot(df, aes(x, y)) +
+ geom_point(aes(col=col), size=2) +
+ xlab("PC1") +
+ ylab("PC2") +
+ scale_color_discrete(name="Clusters") +
+ geom_text_repel(aes(label=ids))
+
+p
+```
+```{r}
+# NMA of all structures
+modes <- nma(pdbs)
+
+plot(modes, pdbs, col=grps.rd)
+```
+
+
+
