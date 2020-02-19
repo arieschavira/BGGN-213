@@ -1,0 +1,56 @@
+---
+title: 'Class13: Drug Discovery'
+author: "Aries Chavira"
+date: "2/19/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Retrieve and process starting HIV protease structure 
+
+Here we download and clean the HIV-Pr structure (pdb codeL 1HSG) from PDB database. We will separate the "protein-only" and "ligand only" into two PDB files  
+
+```{r}
+library(bio3d)
+```
+
+```{r}
+file.name <- get.pdb("1HSG") 
+```
+
+We will use `read.pdb`, `atom.select`, and `write.pdb` functions to make our seperate "Protein-only" and "Ligand only" PDB files 
+
+```{r}
+HIV <- read.pdb("1HSG")
+
+HIV
+```
+```{r}
+Protein <- atom.select(HIV, "protein", value = TRUE)
+
+Ligand <- atom.select(HIV, "ligand", value = TRUE)
+```
+ 
+ 
+```{r}
+prot.pdb <- write.pdb(Protein, file = "1hsg_protein.pdb")
+
+lig.pdb <- write.pdb(Ligand, file = "1hsg_ligand.pdb")
+```
+
+## Reading docking results 
+
+converting results into a .pdb instead of .pdbqt
+```{r}
+res <- read.pdb("all.pdbqt", multi=TRUE)
+write.pdb(res, "results.pdb")
+```
+
+
+
+
+
+
