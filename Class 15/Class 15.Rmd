@@ -1,0 +1,108 @@
+---
+title: "Class 15: Analysis of RNA Seq data "
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## RNA Seq and transcriptomics 
+
+```{r}
+library(DESeq2)
+```
+
+```{r}
+counts <- read.csv("airway_scaledcounts.csv", stringsAsFactors = FALSE)
+metadata <-  read.csv("airway_metadata.csv", stringsAsFactors = FALSE)
+```
+
+```{r}
+nrow(counts)
+ncol(counts)
+```
+
+
+## Averages of gene expression for each row and add it to the end of the `counts` data, and compare Control vs Treated 
+
+Extracting the sample names of the samples that are control, from the metadata 
+```{r}
+control <- metadata[metadata$dex == "control", ]
+control
+```
+
+Finding the mean values for each gene (i.e. each row)
+```{r}
+control.mean <- rowSums(counts[ , control$id])/ nrow(control)
+names(control.mean) <- counts$ensgene
+```
+
+## Treated 
+
+```{r}
+treated <- metadata[metadata$dex =="treated", ]
+treated.mean <- rowMeans(counts[,treated$id])
+```
+
+```{r}
+treatedavg <- rowSums(counts[ , treated$id] / nrow(treated$id))
+```
+
+```{r}
+mycounts <- data.frame(control.mean, treated.mean)
+```
+
+```{r}
+plot(mycounts)
+```
+
+Because plot is so scewed to the left, we will log it to increase visibility 
+
+```{r}
+plot(mycounts, log ="xy")
+```
+
+removing our values of zero in counts gr
+
+```{r}
+to.rm <- unique(which(mycounts == 0, arr.ind = TRUE)[,"row"] )
+newcounts <- mycounts[-to.rm, ]
+nrow(newcounts)
+```
+
+calculate the log2 fold change of treated over controlled 
+```{r}
+newcounts$log2fc <- log2(newcounts[,"treated.mean"]/newcounts[,"control.mean"])
+
+sum(newcounts$log2fc > 2)
+sum(newcounts$log2fc < -2)
+```
+
+setup the object required from `DESeq2`
+```{r}
+dds <- DESeqDataSetFromMatrix(countData=counts,
+                              colData=metadata,
+                              design=~dex,
+                              tidy=TRUE)
+dds
+```
+
+
+```{r}
+dds <- DESeq(dds)
+res <- results(dds)
+res
+```
+
+## Volcano plots
+
+Plot of log2fc vs p-value
+```{r}
+plot(res$log2FoldChange, -log(res$padj), col="gray")
+abline(v=c(-2, +2), lty=2)
+abline(h=-log(0.05), lty=2)
+```
+
+
+
