@@ -1,0 +1,97 @@
+---
+title: "Class17"
+author: "Aries Chavira"
+date: "3/4/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here we analyze infection data for the 2019 novel Coronavirus COVID-19 (2019-nCoV) epidemic. The raw data is pulled from the Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE) Coronavirus repository.
+
+A CSV file is available here https://github.com/RamiKrispin/coronavirus-csv
+
+
+```{r}
+url <- "https://tinyurl.com/COVID-2019"
+virus <- read.csv(url)
+
+tail(virus)
+```
+
+Questions to answer 
+ 1. How many total infected cases are there 
+ 2. How many deaths linked to infection have there been 
+ 3. What is the overall death rate of the disease of the entire dataset 
+ 4. What is the death rate in China respectively 
+ 5. What is the death rate in Italy, US, and Iran? 
+ 
+ 1. How many total infected cases are there 
+```{r}
+total_cases <- sum(virus$cases)
+```
+ 
+2. How many deaths linked to infection have there been 
+```{r}
+death <- virus$type=="death"
+death_cases <- sum(virus[death,"cases"])
+```
+
+ 3. What is the overall death rate of the disease of the entire dataset 
+```{r}
+3160/144233 *100
+```
+
+4. What is the death rate in China respectively 
+```{r}
+main_china <- virus$Country.Region=="Mainland China"
+main_china <- virus[main_china, ]
+main_china
+```
+
+```{r}
+china_dead <- main_china$type=="death"
+dr_china <- sum(main_china[china_dead, "cases"])
+dr_china 
+```
+```{r}
+total_china <- sum(main_china$cases)
+china_death_rate <- dr_china / total_china * 100
+china_death_rate
+```
+
+ITALY 
+```{r}
+italy <- virus$Country.Region=="Italy"
+total_italy <- virus[italy, ]
+total_italy
+```
+
+```{r}
+italy_deaths <- total_italy$type=="death"
+dr_italy <- sum(total_italy[italy_deaths, "cases"])
+
+total_infected_italy <- sum(total_italy$cases)
+italy_death_rate <- dr_italy/ total_infected_italy * 100
+italy_death_rate
+
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
