@@ -1,5 +1,5 @@
 ---
-title: "Class17"
+title: "Class17: Corona virus investigation"
 author: "Aries Chavira"
 date: "3/4/2020"
 output: github_document
@@ -48,41 +48,74 @@ death_cases <- sum(virus[death,"cases"])
 ```{r}
 main_china <- virus$Country.Region=="Mainland China"
 main_china <- virus[main_china, ]
-main_china
-```
 
-```{r}
 china_dead <- main_china$type=="death"
 dr_china <- sum(main_china[china_dead, "cases"])
 dr_china 
-```
-```{r}
+
 total_china <- sum(main_china$cases)
-china_death_rate <- dr_china / total_china * 100
-china_death_rate
+dr_in_china <- dr_china / total_china * 100
+dr_in_china
 ```
 
-ITALY 
+> Death rate in ITALY 
+
 ```{r}
 italy <- virus$Country.Region=="Italy"
 total_italy <- virus[italy, ]
-total_italy
-```
 
-```{r}
 italy_deaths <- total_italy$type=="death"
 dr_italy <- sum(total_italy[italy_deaths, "cases"])
+dr_italy
 
 total_infected_italy <- sum(total_italy$cases)
-italy_death_rate <- dr_italy/ total_infected_italy * 100
-italy_death_rate
+dr_in_italy <- dr_italy/ total_infected_italy * 100
+dr_in_italy
+```
 
+> Death rate in IRAN
+
+```{r}
+iran <- virus$Country.Region=="Iran"
+only_iran <- virus[iran, ]
+
+iran_dead <- only_iran$type=="death"
+dr_iran <- sum(only_iran[iran_dead, "cases"])
+dr_iran
+
+total_infected_iran <- sum(only_iran$cases)
+dr_in_iran <- (dr_iran / total_infected_iran * 100)
+dr_in_iran
+```
+
+> Death rate in the US 
+
+```{r}
+us <- virus$Country.Region=="US"
+total_us <- virus[us, ]
+
+us_deaths <- total_us$type=="death"
+dr_us <- sum(total_us[us_deaths, "cases"])
+dr_us
+
+cases_us <- sum(total_us$cases)
+cases_us
+
+dr_in_us <- (dr_us / cases_us * 100)
+dr_in_us
 ```
 
 ```{r}
+dr_china
+dr_italy
+dr_iran
+
+dr_in_china
+dr_in_iran
+dr_in_italy
+dr_in_us
 
 ```
-
 
 
 
