@@ -52,9 +52,6 @@ library(DESeq2)
 
     ## Loading required package: GenomeInfoDb
 
-    ## Warning: no function found corresponding to methods exports from 'GenomicRanges'
-    ## for: 'concatenateObjects'
-
     ## Loading required package: SummarizedExperiment
 
     ## Loading required package: Biobase
@@ -64,13 +61,6 @@ library(DESeq2)
     ##     Vignettes contain introductory material; view with
     ##     'browseVignettes()'. To cite Bioconductor, see
     ##     'citation("Biobase")', and for packages 'citation("pkgname")'.
-
-    ## 
-    ## Attaching package: 'Biobase'
-
-    ## The following object is masked from 'package:BiocGenerics':
-    ## 
-    ##     dims
 
     ## Loading required package: DelayedArray
 
@@ -95,15 +85,6 @@ library(DESeq2)
     ## The following objects are masked from 'package:base':
     ## 
     ##     aperm, apply
-
-    ## Warning: replacing previous import 'BiocGenerics::dims' by 'Biobase::dims' when
-    ## loading 'SummarizedExperiment'
-
-    ## Warning: replacing previous import 'Biobase::dims' by 'BiocGenerics::dims' when
-    ## loading 'DESeq2'
-
-    ## Warning: replacing previous import 'BiocGenerics::dims' by 'Biobase::dims' when
-    ## loading 'AnnotationDbi'
 
 ``` r
 counts <- read.csv("airway_scaledcounts.csv", stringsAsFactors = FALSE)
@@ -261,29 +242,29 @@ res
     ## DataFrame with 38694 rows and 6 columns
     ##                          baseMean     log2FoldChange             lfcSE
     ##                         <numeric>          <numeric>         <numeric>
-    ## ENSG00000000003  747.194195359907   -0.3507029622814 0.168242083226488
+    ## ENSG00000000003  747.194195359907  -0.35070302068658 0.168245681332529
     ## ENSG00000000005                 0                 NA                NA
-    ## ENSG00000000419  520.134160051965  0.206107283859631 0.101041504450297
-    ## ENSG00000000457  322.664843927049 0.0245270113332259 0.145133863747848
-    ## ENSG00000000460   87.682625164828 -0.147142630021601 0.256995442048617
+    ## ENSG00000000419  520.134160051965  0.206107766417862 0.101059218008052
+    ## ENSG00000000457  322.664843927049 0.0245269479387466 0.145145067649248
+    ## ENSG00000000460   87.682625164828  -0.14714204922212 0.257007253994673
     ## ...                           ...                ...               ...
     ## ENSG00000283115                 0                 NA                NA
     ## ENSG00000283116                 0                 NA                NA
     ## ENSG00000283119                 0                 NA                NA
-    ## ENSG00000283120 0.974916032393564 -0.668250141507888  1.69441251902541
+    ## ENSG00000283120 0.974916032393564  -0.66825846051647  1.69456285241871
     ## ENSG00000283123                 0                 NA                NA
     ##                               stat             pvalue              padj
     ##                          <numeric>          <numeric>         <numeric>
-    ## ENSG00000000003  -2.08451390731582 0.0371134465286876 0.163017154198658
+    ## ENSG00000000003  -2.08446967499531 0.0371174658432818 0.163034808641677
     ## ENSG00000000005                 NA                 NA                NA
-    ## ENSG00000000419   2.03982793982463 0.0413674659636722 0.175936611069872
-    ## ENSG00000000457  0.168995785682647  0.865799956261551 0.961682459668587
-    ## ENSG00000000460 -0.572549570718713  0.566949713033353 0.815805192485639
+    ## ENSG00000000419   2.03947517584631 0.0414026263001157 0.176031664879167
+    ## ENSG00000000457  0.168982303952742  0.865810560623564 0.961694238404392
+    ## ENSG00000000460  -0.57252099672319  0.566969065257939 0.815848587637731
     ## ...                            ...                ...               ...
     ## ENSG00000283115                 NA                 NA                NA
     ## ENSG00000283116                 NA                 NA                NA
     ## ENSG00000283119                 NA                 NA                NA
-    ## ENSG00000283120 -0.394384563383805  0.693297138830703                NA
+    ## ENSG00000283120 -0.394354484734893  0.693319342566817                NA
     ## ENSG00000283123                 NA                 NA                NA
 
 Volcano plots
