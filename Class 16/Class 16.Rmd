@@ -31,29 +31,26 @@ head(countData)
 ```
 
 ```{r}
-raw_countData <- countData[ , -1]
+countData <- countData[ , -1]
+
 head(countData)
 ```
 
-```{r}
-countData <- raw_countData[,-1]
-head(countData)
-```
+
 
 ```{r}
-nrow(raw_countData)
-ncol(raw_countData)
+ncol(countData)
 ```
 
 ## Remove genes that have zero hits in the counts column for all 
 ```{r}
 inds <- rowSums(countData) != 0
-countData <- countData[ inds, ]
+countData2 <- countData[ inds, ]
 ```
 
 ```{r}
-dim(countData)
-``````
+dim(countData2)
+```
 
 How many genes did we get rid of that had no data? How many do we have left?
 
@@ -99,7 +96,7 @@ plot(res$log2FoldChange, -log(res$padj), col=mycols)
 ```
 
 ```{r}
-write(res)
+#write(res)
 ```
 
 ```{r}
