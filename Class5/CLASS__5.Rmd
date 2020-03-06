@@ -1,0 +1,30 @@
+---
+title: "Class 5: Data visualization and graphics in R"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Class 5 : Data Visualization 
+
+
+```{r}
+plot(1:5, col="blue", typ="o")
+
+weight <- read.table("./bimm143_05_rstats/weight_chart.txt", header=TRUE)
+
+weight
+
+plot(weight$Age, weight$Weight, type = "o", pch=15, cex=1.5, lwd=2, ylim=c(2,10), xlab = "Age", ylab = "Weight", main = "Weight vs Age", col="coral")
+
+mouse <- read.delim("./bimm143_05_rstats/feature_counts.txt", header=TRUE)
+
+par(mar=c(5, 11.1, 4.1, 2))
+barplot(mouse$Count, horiz=TRUE, ylab="", 
+        names.arg = mouse$Feature, 
+        main="COOL", las=1, xlim=c(0,80000), xlab="Size")
+
+```
+
