@@ -1,5 +1,6 @@
 Class 5: Data visualization and graphics in R
 ================
+Aries Chavira
 
 Class 5 : Data Visualization
 ============================

@@ -1,5 +1,6 @@
 ---
 title: "Class 5: Data visualization and graphics in R"
+author: "Aries Chavira"
 output: github_document
 ---
 
