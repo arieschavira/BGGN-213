@@ -2,7 +2,7 @@
 title: "Class 9: Machine learning pt1"
 author: "Aries Chavira"
 date: "2/5/2020"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
