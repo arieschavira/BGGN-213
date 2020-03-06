@@ -21,3 +21,10 @@ This is my classwork from [BGGN-213 Winter quarter 2020](https://bioboot.github.
 -Class 13: [Drug Discovery](https://github.com/arieschavira/BGGN-213/blob/master/Class%2012/Structural-Bioinformatics-.md)
 
 -Class 14: 
+
+-Class 15 [RNA Seq and transcriptomics](https://github.com/arieschavira/BGGN-213/blob/master/Class%2015/Class-15.md)
+
+-Class 16: 
+
+-Class 17: [TARA oceans analysis](https://github.com/arieschavira/BGGN-213/blob/master/Class%2017/CLASS17.md)
+
