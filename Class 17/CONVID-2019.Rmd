@@ -117,8 +117,24 @@ dr_in_us
 
 ```
 
+```{r}
+US <- virus$Country.Region=="US"
+today_us <- virus[US, ]
+
+sum()
+```
 
 
+```{r}
+library(dplyr)
+
+cases_by_country <- virus %>%
+    group_by(Country.Region) %>%
+    summarise(tot=sum(cases)) %>% 
+    arrange(desc(tot))
+
+cases_by_country
+```
 
 
 
