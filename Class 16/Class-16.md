@@ -1,5 +1,6 @@
 Gene Differential Expression
 ================
+Aries Chavira
 
 ``` r
 library(DESeq2)

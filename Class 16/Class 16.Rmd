@@ -1,5 +1,6 @@
 ---
 title: "Gene Differential Expression"
+author: "Aries Chavira"
 output: github_document
 ---
 
