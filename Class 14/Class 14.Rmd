@@ -2,7 +2,7 @@
 title: "Class 14"
 author: "Aries Chavira"
 date: "2/26/2020"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
