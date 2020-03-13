@@ -1,0 +1,59 @@
+---
+title: "FINAL"
+author: "Aries Chavira"
+date: "3/11/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(bio3d)
+fasta <- read.fasta("/Users/arieschavira/Desktop/BGGN213_FI.fas")
+```
+
+```{r}
+distance <- seqidentity(fasta)
+heat <- heatmap(distance, scale="column", col = cm.colors(256), margins= c(8,8))
+```
+
+```{r}
+blast <- blast.pdb(fasta)
+```
+
+```{r}
+blast$hit.tbl
+```
+
+```{r}
+more <- pdb.annotate(blast$hit.tbl$subjectids)
+```
+
+```{r}
+bat <- fasta$ali[2, ]
+bat
+```
+
+```{r}
+baboon <- read.fasta("/Users/arieschavira/Downloads/seqdump.fasta")
+```
+
+
+```{r}
+blast_again <- blast.pdb(baboon)
+```
+
+```{r}
+more2 <- pdb.annotate(blast_again$hit.tbl$subjectids)
+```
+
+
+
+
+
+
+
+
+
