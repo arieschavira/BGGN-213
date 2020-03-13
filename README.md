@@ -8,13 +8,13 @@ This is my classwork from [BGGN-213 Winter quarter 2020](https://bioboot.github.
 
 -Class 06: [R Functions](https://github.com/arieschavira/BGGN-213/blob/master/Class6/Class_6.md)
 
--Class 07: [Sequence Allignments](https://github.com/arieschavira/BGGN-213/blob/master/Class7/Class7.R)
+-Class 07: [Sequence Allignments](https://github.com/arieschavira/BGGN-213/blob/master/Class7/class7.md)
 
--Class 08: 
-
--Class 09: [Machine Learning pt.1](https://github.com/arieschavira/BGGN-213/blob/master/Class%209/PCA.Rmd)
+-Class 09: [Machine Learning pt.1](https://github.com/arieschavira/BGGN-213/blob/master/Class%209/PCA.md)
 
 -Class 10: [Unsupervised learning](https://github.com/arieschavira/BGGN-213/blob/master/Class10/Class10.md)
+
+-Class 11: [FIND A GENE](
 
 -Class 12: [Structural Bioinformatics](https://github.com/arieschavira/BGGN-213/blob/master/Class%2012/Structural-Bioinformatics-.md)
 
